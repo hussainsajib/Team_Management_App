@@ -2,7 +2,7 @@
     <div class="Teams">
         <team
             v-for="team of teams"
-            :id="team._id"
+            :key="team._id"
             :team="team"
          />
 
@@ -11,7 +11,10 @@
 
 <script>
 import getTeamData from "../teams_raw"
+import getEmloyeeData from "../employees"
+import getProjectData from "../Projects"
 import Team from "./Team"
+import employees from '../employees';
 
 export default {
     name: "Teams",
@@ -21,7 +24,9 @@ export default {
                 loading: false,
                 errored: false
             },
-            teams: null
+            teams: null,
+            employees: null,
+            projects: null
         }
     },
     components: {
@@ -30,7 +35,16 @@ export default {
     created: function(){
         getTeamData()
             .then(teams=>this.teams = teams)
-            .catch(error => this.teams = error)
+            .then(()=>{
+                getEmloyeeData()
+                    .then(employees=>this.employees = employees)
+                    .then(getProjectData()
+                                .then(projects => this.projects = projects)
+                                .catch(error => this.status.errored = true)
+                                )
+                    .catch(error => this.status.errored = true)
+            })
+            .catch(error => this.status.errored = true)
     },
 }
 </script>
