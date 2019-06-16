@@ -1,13 +1,21 @@
 <template>
     <div>
-        <select name="projects" id="projects">
-            <option 
+        <b-dropdown 
+            size="sm"
+            variant="info"
+            name="projects" 
+            id="projects" 
+            text="Project List"
+            class="m-md-2"
+        >
+            <b-dropdown-item 
                 v-for="project of projectObjectList"
                 :key="project._id"
                 :project="project"
                 :value="project.ProjectName"
-            >{{project.ProjectName}}</option>
-        </select>
+            >{{project.ProjectName}}
+            </b-dropdown-item>
+        </b-dropdown>
     </div>
     
 </template>

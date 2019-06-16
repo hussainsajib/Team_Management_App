@@ -1,30 +1,21 @@
 <template>
-    <div>
-        <b-card
-            :title="team.TeamName"
+    <div id="teamcard">
+        <b-card 
+            :title="team.TeamName" 
             class="mb-2"
+                
         >
             <b-card-text>
-
-
+                <team-lead :teamLead="teamLead" />
+                <team-members :key="teamMembers._id" :teamMembers="teamMembers" />
+                <projects :projects="team.Projects" />
             </b-card-text>
-
         </b-card>
-
-
-        <h2>{{team.TeamName}}</h2>
-        <team-lead :teamLead="teamLead" />
-        <team-members :key="teamMembers._id" :teamMembers="teamMembers" />
-        <projects :projects="team.Projects" />
-
     </div>
 </template>
 
 <script>
-import Vue from 'vue'
-import BootstrapVue from 'bootstrap-vue'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 
 import getEmployeeData from '../employees'
 
@@ -69,6 +60,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+#teamcard{
+    margin-bottom: 5%;
+    width: 15rem;
+}
 
 </style>

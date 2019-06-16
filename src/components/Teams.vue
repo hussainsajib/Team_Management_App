@@ -1,5 +1,5 @@
 <template>
-    <div class="Teams">
+    <div id="teams">
         <team
             v-for="team of teams"
             :key="team._id"
@@ -40,5 +40,11 @@ export default {
 </script>
 
 <style>
+#teams{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
 
 </style>

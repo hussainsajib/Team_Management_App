@@ -1,11 +1,20 @@
 <template>
     <div>
-        <select name="teamlead" id="teamlead">
-            <option
-                :member="teamLead"
-                :value="teamLead.FirstName"
-            >{{teamLead.FirstName}} {{teamLead.LastName}}</option>
-        </select>
+        <b-dropdown 
+            size="sm"
+            class="m-md-2"
+            variant="info" 
+            :text="teamLead.FirstName+' '+teamLead.LastName" 
+            name="teamlead" 
+            id="teamlead"
+        >
+                <b-dropdown-item
+                    :member="teamLead"
+                    :value="teamLead.FirstName"
+                    :class="menu-item"
+                >{{teamLead.FirstName}} {{teamLead.LastName}}
+                </b-dropdown-item>
+        </b-dropdown>
     </div>
 
     
@@ -19,5 +28,6 @@ export default {
 </script>
 
 <style>
+
 
 </style>

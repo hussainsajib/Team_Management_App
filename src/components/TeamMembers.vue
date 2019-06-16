@@ -1,13 +1,20 @@
 <template>
   <div>
-    <select name="team-members" id="team-membes">
-      <option 
+    <b-dropdown
+      size="sm"
+      variant="info"
+      name="team-members" 
+      id="team-membes"
+      text="Team Members"
+    >
+      <b-dropdown-item 
         v-for="member of teamMembers"
         :key="member._id"
         :member="member"
         :value="member.FirstName"
-      >{{ member.FirstName }} {{ member.LastName }}</option>
-    </select>
+      >{{ member.FirstName }} {{ member.LastName }}
+      </b-dropdown-item>
+    </b-dropdown>
   </div>
     
 </template>
