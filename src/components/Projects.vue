@@ -2,7 +2,7 @@
     <div>
         <select name="projects" id="projects">
             <option 
-                v-for="project of projectNameList"
+                v-for="project of projectObjectList"
                 :key="project._id"
                 :project="project"
                 :value="project.ProjectName"
@@ -24,7 +24,7 @@ export default {
                 errored: false
             },
             projectList: null,
-            projectNameList: []
+            projectObjectList: []
         }
     },
     props: [ 'projects' ],
@@ -38,7 +38,7 @@ export default {
     },
     methods: {
         generateNameList: function(list){
-            this.projects.forEach(project=> this.projectNameList.push(list.find(item=> item._id == project)))
+            this.projects.forEach(project=> this.projectObjectList.push(list.find(item=> item._id == project)))
         }
         
     }

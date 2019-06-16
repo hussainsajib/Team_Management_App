@@ -10,11 +10,10 @@
 </template>
 
 <script>
+import { sortBy } from 'lodash'
+
 import getTeamData from "../teams_raw"
-import getEmloyeeData from "../employees"
-import getProjectData from "../Projects"
 import Team from "./Team"
-import employees from '../employees';
 
 export default {
     name: "Teams",
@@ -34,16 +33,7 @@ export default {
     },
     created: function(){
         getTeamData()
-            .then(teams=>this.teams = teams)
-            .then(()=>{
-                getEmloyeeData()
-                    .then(employees=>this.employees = employees)
-                    .then(getProjectData()
-                                .then(projects => this.projects = projects)
-                                .catch(error => this.status.errored = true)
-                                )
-                    .catch(error => this.status.errored = true)
-            })
+            .then(teams=> this.teams = sortBy(teams,(team)=>team.TeamName))
             .catch(error => this.status.errored = true)
     },
 }

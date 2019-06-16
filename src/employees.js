@@ -1,4 +1,4 @@
-const emloyees_url = 'https://glacial-beyond-73904.herokuapp.com/employees';
+const employees_url = 'https://glacial-beyond-73904.herokuapp.com/employees';
 
 export default function(){
     return fetch(employees_url)
