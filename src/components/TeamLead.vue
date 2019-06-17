@@ -1,20 +1,25 @@
 <template>
     <div>
-        <div v-if="status.show">
-            <multiselect
+        <div v-if="status.errored">
+            <p>TeamLead is in error</p>
+        </div>
+        <div v-else>
+            <div v-if="status.loading">
+                <p>TeamLead Data is loading</p>
+            </div>
+            <div v-else>
+                <multiselect
                 v-model="value"
                 :options="options"
-                :close-on-select="false"
+                :close-on-select="true"
                 :clear-on-select="false"
                 :preselect-first="true"
                 selectLabe="Sel"
                 deselectLabel="Rem"
-            ></multiselect>
-
+                ></multiselect>
+            </div>
         </div>
     </div>
-
-    
 </template>
 
 <script>
@@ -30,23 +35,18 @@ export default {
     data: function(){
         return {
             status:{
-                show: true
+                loading: false,
+                errored: false
             },
             value: null,
-            options: []
+            options: null
         }
     },
-    created: async function(){
-        await this.generateEmployeeList();
-        await this.employeeSelected();
-    },
-    methods: {
-        generateEmployeeList: async function(){
-            this.options = await this.allEmployees.map(employee=>`${employee.FirstName} ${employee.LastName}`)
-        },
-        employeeSelected: async function(){
-            this.value = await this.options.find(employee=>employee.toLowerCase() == this.teamLead.FirstName.concat(' ').concat(this.teamLead.LastName).toLowerCase())
-        }
+    created: function(){
+        this.status.loading = true;
+        this.options = this.allEmployees.map(employee=>`${employee.FirstName} ${employee.LastName}`)
+        this.value = [this.options.find(employee=>employee.toLowerCase() == this.teamLead.FirstName.concat(' ').concat(this.teamLead.LastName).toLowerCase())];
+        this.status.loading = false;
     }
     
 }
@@ -56,7 +56,7 @@ export default {
 
 <style scoped>
 div *{
-    font-size: .9em;
+    font-size: 1em;
 }
 
 </style>
