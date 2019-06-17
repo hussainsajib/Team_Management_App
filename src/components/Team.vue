@@ -6,7 +6,7 @@
                 
         >
             <b-card-text>
-                <team-lead :teamLead="teamLead" />
+                <team-lead :teamLead="teamLead" :allEmployees="employees" />
                 <team-members :key="teamMembers._id" :teamMembers="teamMembers" />
                 <projects :projects="team.Projects" />
             </b-card-text>

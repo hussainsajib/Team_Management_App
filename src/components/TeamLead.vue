@@ -23,7 +23,7 @@ import Multiselect from 'vue-multiselect'
 
 export default {
     name: 'TeamLead',
-    props: ['teamLead'],
+    props: ['teamLead', 'allEmployees'],
     components:{
         Multiselect
     },
@@ -37,7 +37,16 @@ export default {
         }
     },
     created: function(){
-        this.options.push(`${this.teamLead.FirstName} ${this.teamLead.LastName}`)
+        this.generateEmployeeList();
+        this.employeeSelected();
+    },
+    methods: {
+        generateEmployeeList: function(){
+            this.options = this.allEmployees.map(employee=>`${employee.FirstName} ${employee.LastName}`)
+        },
+        employeeSelected: function(){
+            this.value = this.options.find(employee=>employee.toLowerCase() == this.teamLead.FirstName.concat(' ').concat(this.teamLead.LastName).toLowerCase())
+        }
     }
     
 }
