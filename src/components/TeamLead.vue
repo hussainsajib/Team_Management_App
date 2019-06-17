@@ -45,7 +45,7 @@ export default {
     created: function(){
         this.status.loading = true;
         this.options = this.allEmployees.map(employee=>`${employee.FirstName} ${employee.LastName}`)
-        this.value = [this.options.find(employee=>employee.toLowerCase() == this.teamLead.FirstName.concat(' ').concat(this.teamLead.LastName).toLowerCase())];
+        this.value = this.options.find(employee=>employee.toLowerCase() == this.teamLead.FirstName.concat(' ').concat(this.teamLead.LastName).toLowerCase());
         this.status.loading = false;
     }
     

@@ -14,7 +14,7 @@
                 >
                     <b-card-text>
                         <team-lead :teamLead="teamLead" :allEmployees="employees" />
-                        <team-members :key="teamMembers._id" :teamMembers="teamMembers" />
+                        <team-members :key="teamMembers._id" :teamMembers="teamMembers" :allEmployees="employees"/>
                         <projects :teamProjects="teamProjects" :allProjects="projects" />
                     </b-card-text>
                 </b-card>

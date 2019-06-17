@@ -1,7 +1,14 @@
 <template>
   <div class="teammembers">
-    <div v-if="status.show">
-      <multiselect 
+    <div v-if="status.errored">
+      <p>TeamMembers is in error</p>
+    </div>
+    <div v-else>
+      <div v-if="status.loading">
+        <p>TeamMembers is loading</p>
+      </div>
+      <div v-else>
+        <multiselect 
         v-model="value" 
         :options="options"
         :multiple="true"
@@ -12,10 +19,13 @@
         selectLabel="Sel"
         deselectLabel="Rem"
         placeholder="Select Members" 
-      ></multiselect>
+        ></multiselect>
+      </div>
+
     </div>
-  </div>
+
     
+  </div>
 </template>
 
 <script>
@@ -25,7 +35,7 @@ import Multiselect from 'vue-multiselect'
 
 export default {
   name: 'TeamMembers',
-  props: [ 'teamMembers' ],
+  props: [ 'teamMembers', 'allEmployees' ],
   components: {
     Multiselect
   },
@@ -36,13 +46,16 @@ export default {
       status:{
         loading: false,
         errored: false,
-        show: true
       }
     }
   },
-  created: async function(){
-    this.options = await this.teamMembers.map(item=>`${item.FirstName} ${item.LastName}`);
-    
+  created: function(){
+    this.status.loading = true;
+    this.options = this.allEmployees.map(item=>`${item.FirstName} ${item.LastName}`);
+    this.value = this.teamMembers.map(item=>`${item.FirstName} ${item.LastName}`);
+    console.log(this.value);
+    console.log(this.options);
+    this.status.loading = false;
   }
 }
 </script>
