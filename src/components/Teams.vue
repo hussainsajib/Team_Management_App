@@ -4,6 +4,8 @@
             v-for="team of teams"
             :key="team._id"
             :team="team"
+            :projects="projects"
+            :employees="employees"
          />
 
     </div>
@@ -32,18 +34,12 @@ export default {
         Team
     },
     created: async function(){
-        /*
-        getTeamData()
-            .then(teams=> this.teams = sortBy(teams,(team)=>team.TeamName))
-            .catch(error => this.status.errored = true)
-        */
         var allData;
         try{
             allData = await getTeamData();
             this.teams = await allData.teams;
             this.employees = await allData.employees;
             this.projects = await allData.projects;
-            //console.log(await allData.employees);
         } catch(error){
             console.log(error);
         }     

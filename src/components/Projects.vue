@@ -46,7 +46,7 @@ export default {
     },
     
     created: async function(){
-        this.projectList = await getProjectData()
+        this.projectList = await getProjectData();
         await this.generateNameList(this.projectList);
         this.options = await this.projectObjectList.map(item=>item.ProjectName);
         this.status.show = true;

@@ -22,6 +22,7 @@ import getEmployeeData from '../employees'
 import Projects from './Projects'
 import TeamLead from './TeamLead'
 import TeamMembers from './TeamMembers'
+import employees from '../employees';
 
 export default {
     name: 'Team',
@@ -31,34 +32,31 @@ export default {
                 loading: false,
                 errored: false
             },
-            employees: null,
             teamLead: null,
-            teamMembers: []            
+            teamMembers: null,
+            teamProjects:null,
+            teamName: null,            
         }
     },
-    props: [ 'team' ],
+    props: [ 'team', 'projects', 'employees'],
     components:{
         Projects,
         TeamLead,
         TeamMembers
     },
     created: async function(){
-        this.employees = await getEmployeeData();
-        this.teamLead = await this.employees.find(employee=>employee._id == this.team.TeamLead);
-        await this.team.Employees.forEach(member=>this.teamMembers.push(this.employees.find(employee=>employee._id == member)))
-        //console.log(await this.employees);
-            // .then(employeeData=>{
-            //     this.employees = employeeData;
-            // })
-            // .then(()=>{
-            //     this.teamLead = this.employees.find(employee=>employee._id == this.team.TeamLead)
-            // })
-            // .then(()=>{
-            //     this.team.Employees.forEach(member=>this.teamMembers.push(this.employees.find(employee=>employee._id == member)))
-            // })
-            // .catch(error=>{
-            //     this.errored = true;
-            // })
+        await setTeamLead();
+        await setTeamMembers();
+    },
+    mehtods:{
+        setTeamLead: async function(){
+            console.log(employees);
+            this.teamLead = await this.employees.find(employee=>employee._id == this.team.TeamLead);
+        },
+        setTeamMembers: async function(){
+            console.log(this.teamMembers);
+            this.setTeamMembers = await this.team.Employees.map(member=>this.employees.find(employee=>employee._id == member));
+        }
     }
 }
 </script>
