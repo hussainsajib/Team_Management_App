@@ -1,31 +1,57 @@
 <template>
-  <div>
-    <b-dropdown
-      size="sm"
-      variant="info"
-      name="team-members" 
-      id="team-membes"
-      text="Team Members"
-    >
-      <b-dropdown-item 
-        v-for="member of teamMembers"
-        :key="member._id"
-        :member="member"
-        :value="member.FirstName"
-      >{{ member.FirstName }} {{ member.LastName }}
-      </b-dropdown-item>
-    </b-dropdown>
+  <div class="teammembers">
+    <div v-if="status.show">
+      <multiselect 
+        v-model="value" 
+        :options="options"
+        :multiple="true"
+        :close-on-select="false"
+        :clear-on-select="false"
+        :internalSearch="true"
+        :preserveSearch="true"
+        selectLabel="Sel"
+        deselectLabel="Rem"
+        placeholder="Select Members" 
+      ></multiselect>
+    </div>
   </div>
     
 </template>
 
 <script>
+import Vue from 'vue'
+import Multiselect from 'vue-multiselect'
+
+
 export default {
   name: 'TeamMembers',
   props: [ 'teamMembers' ],
+  components: {
+    Multiselect
+  },
+  data:function(){
+    return {
+      value: null,
+      options: null,
+      status:{
+        loading: false,
+        errored: false,
+        show: true
+      }
+    }
+  },
+  created: function(){
+    this.options = this.teamMembers.map(item=>`${item.FirstName} ${item.LastName}`);
+    
+  }
 }
 </script>
 
-<style>
 
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"> </style>
+<style scoped>
+div *{
+  font-size: .9em;
+}
 </style>
