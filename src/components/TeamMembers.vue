@@ -11,6 +11,7 @@
         <multiselect 
         v-model="value" 
         :options="options"
+        :label="Members"
         :multiple="true"
         :close-on-select="false"
         :clear-on-select="false"
@@ -18,8 +19,20 @@
         :preserveSearch="true"
         selectLabel="Sel"
         deselectLabel="Rem"
-        placeholder="Select Members" 
-        ></multiselect>
+        placeholder="Select Members"
+        >
+          <template 
+            slot="selection" 
+            slot-scope="{ values, search, isOpen }"
+          > <span 
+                class="multiselect__single" 
+                v-if="values.length 
+                &amp;&amp; 
+                !isOpen">
+                {{ values.length }} of {{options.length}} Selected
+            </span>
+          </template>
+        </multiselect>
       </div>
 
     </div>

@@ -14,6 +14,7 @@
                 :close-on-select="true"
                 :clear-on-select="false"
                 :preselect-first="true"
+                :allow-empty="false"
                 selectLabe="Sel"
                 deselectLabel="Rem"
                 ></multiselect>

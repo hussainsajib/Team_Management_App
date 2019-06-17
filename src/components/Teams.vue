@@ -7,7 +7,7 @@
             <div v-if="status.loading">
                 <h2>Still loading data in Teams</h2>
             </div>
-            <div v-else>
+            <div class="cards" v-else>
                 <team
                 v-for="team of teams"
                 :key="team._id"
@@ -60,7 +60,7 @@ export default {
 </script>
 
 <style>
-#teamscomp{
+.cards{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
