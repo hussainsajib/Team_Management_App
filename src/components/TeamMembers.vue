@@ -40,8 +40,8 @@ export default {
       }
     }
   },
-  created: function(){
-    this.options = this.teamMembers.map(item=>`${item.FirstName} ${item.LastName}`);
+  created: async function(){
+    this.options = await this.teamMembers.map(item=>`${item.FirstName} ${item.LastName}`);
     
   }
 }

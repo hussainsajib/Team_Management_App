@@ -45,19 +45,21 @@ export default {
         }
     },
     
-    created: function(){
-        getProjectData()
-            .then(projectData=>{
-                this.projectList = projectData;
-                this.generateNameList(this.projectList);
-            })
+    created: async function(){
+        this.projectList = await getProjectData()
+        await this.generateNameList(this.projectList);
+        this.options = await this.projectObjectList.map(item=>item.ProjectName);
+        this.status.show = true;
+
+        /*
             .then(()=>this.options = this.projectObjectList.map(item=>item.ProjectName))
             .then(()=>this.status.show = true)
             .catch(error => this.status.errored = true)
+        */
     },
     methods: {
-        generateNameList: function(list){
-            this.projects.forEach(project=> this.projectObjectList.push(list.find(item=> item._id == project)))
+        generateNameList: async function (list){
+            await this.projects.forEach(project=> this.projectObjectList.push(list.find(item=> item._id == project)))
         }
     }
 

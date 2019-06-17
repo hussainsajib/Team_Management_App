@@ -42,20 +42,23 @@ export default {
         TeamLead,
         TeamMembers
     },
-    created:function(){
-        getEmployeeData()
-            .then(employeeData=>{
-                this.employees = employeeData;
-            })
-            .then(()=>{
-                this.teamLead = this.employees.find(employee=>employee._id == this.team.TeamLead)
-            })
-            .then(()=>{
-                this.team.Employees.forEach(member=>this.teamMembers.push(this.employees.find(employee=>employee._id == member)))
-            })
-            .catch(error=>{
-                this.errored = true;
-            })
+    created: async function(){
+        this.employees = await getEmployeeData();
+        this.teamLead = await this.employees.find(employee=>employee._id == this.team.TeamLead);
+        await this.team.Employees.forEach(member=>this.teamMembers.push(this.employees.find(employee=>employee._id == member)))
+        //console.log(await this.employees);
+            // .then(employeeData=>{
+            //     this.employees = employeeData;
+            // })
+            // .then(()=>{
+            //     this.teamLead = this.employees.find(employee=>employee._id == this.team.TeamLead)
+            // })
+            // .then(()=>{
+            //     this.team.Employees.forEach(member=>this.teamMembers.push(this.employees.find(employee=>employee._id == member)))
+            // })
+            // .catch(error=>{
+            //     this.errored = true;
+            // })
     }
 }
 </script>

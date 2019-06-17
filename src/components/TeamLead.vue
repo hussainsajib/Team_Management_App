@@ -36,16 +36,16 @@ export default {
             options: []
         }
     },
-    created: function(){
-        this.generateEmployeeList();
-        this.employeeSelected();
+    created: async function(){
+        await this.generateEmployeeList();
+        await this.employeeSelected();
     },
     methods: {
-        generateEmployeeList: function(){
-            this.options = this.allEmployees.map(employee=>`${employee.FirstName} ${employee.LastName}`)
+        generateEmployeeList: async function(){
+            this.options = await this.allEmployees.map(employee=>`${employee.FirstName} ${employee.LastName}`)
         },
-        employeeSelected: function(){
-            this.value = this.options.find(employee=>employee.toLowerCase() == this.teamLead.FirstName.concat(' ').concat(this.teamLead.LastName).toLowerCase())
+        employeeSelected: async function(){
+            this.value = await this.options.find(employee=>employee.toLowerCase() == this.teamLead.FirstName.concat(' ').concat(this.teamLead.LastName).toLowerCase())
         }
     }
     
