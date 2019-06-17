@@ -1,16 +1,28 @@
 <template>
     <div id="teamcard">
-        <b-card 
-            :title="team.TeamName" 
-            class="mb-2"
-                
-        >
-            <b-card-text>
-                <team-lead :teamLead="teamLead" :allEmployees="employees" />
-                <team-members :key="teamMembers._id" :teamMembers="teamMembers" />
-                <projects :projects="team.Projects" />
-            </b-card-text>
-        </b-card>
+        <div v-if="status.errored">
+            <p>Team comp in error</p>
+        </div>
+        <div v-else>
+            <div v-if="status.loading">
+                <h2>Still loading team</h2>
+            </div>
+            <div v-else>
+                <b-card 
+                :title="team.TeamName" 
+                class="b-card"
+                >
+                    <b-card-text>
+                        <team-lead :teamLead="teamLead" :allEmployees="employees" />
+                        <team-members :key="teamMembers._id" :teamMembers="teamMembers" />
+                        <projects :teamProjects="teamProjects" :allProjects="projects" />
+                    </b-card-text>
+                </b-card>
+            </div>
+        </div>
+
+        
+        
     </div>
 </template>
 
@@ -18,7 +30,6 @@
 
 
 import getEmployeeData from '../employees'
-
 import Projects from './Projects'
 import TeamLead from './TeamLead'
 import TeamMembers from './TeamMembers'
@@ -44,25 +55,31 @@ export default {
         TeamLead,
         TeamMembers
     },
-    created: async function(){
-        await setTeamLead();
-        await setTeamMembers();
+    created: function(){
+        this.status.loading = true;
+        this.setTeamLead();
+        this.setTeamMembers();
+        this.teamProjects = this.team.Projects;
+        this.teamName = this.team.TeamName;
+        this.status.loading = false;
     },
-    mehtods:{
-        setTeamLead: async function(){
-            console.log(employees);
-            this.teamLead = await this.employees.find(employee=>employee._id == this.team.TeamLead);
+    methods:{
+        setTeamLead: function(){
+            this.teamLead = this.employees.find(employee=>employee._id == this.team.TeamLead);
         },
-        setTeamMembers: async function(){
-            console.log(this.teamMembers);
-            this.setTeamMembers = await this.team.Employees.map(member=>this.employees.find(employee=>employee._id == member));
+        setTeamMembers: function(){
+            this.teamMembers = this.team.Employees.map(member=>this.employees.find(employee=>employee._id == member));
+        },
+        setProjects: function(){
+            this.teamProjects = this.team
         }
+
     }
 }
 </script>
 
 <style scoped>
-#teamcard{
+.b-card{
     margin-bottom: 5%;
     width: 15rem;
 }

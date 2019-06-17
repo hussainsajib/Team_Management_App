@@ -1,19 +1,28 @@
 <template>
-    <div id="teams">
-        <team
-            v-for="team of teams"
-            :key="team._id"
-            :team="team"
-            :projects="projects"
-            :employees="employees"
-         />
-
+    <div id="teamscomp">
+        <div v-if="status.errored">
+            <p>Error loading data</p>
+        </div>
+        <div>
+            <div v-if="status.loading">
+                <h2>Still loading data in Teams</h2>
+            </div>
+            <div v-else>
+                <team
+                v-for="team of teams"
+                :key="team._id"
+                :team="team"
+                :projects="projects"
+                :employees="employees"
+            />
+            </div>
+        </div>
+        
     </div>
 </template>
 
 <script>
 import { sortBy } from 'lodash'
-
 import getTeamData from "../teams_raw"
 import Team from "./Team"
 
@@ -36,11 +45,14 @@ export default {
     created: async function(){
         var allData;
         try{
+            this.status.loading = true;
             allData = await getTeamData();
             this.teams = await allData.teams;
             this.employees = await allData.employees;
             this.projects = await allData.projects;
+            this.status.loading = false;
         } catch(error){
+            this.status.errored = true;
             console.log(error);
         }     
     },
@@ -48,7 +60,7 @@ export default {
 </script>
 
 <style>
-#teams{
+#teamscomp{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
