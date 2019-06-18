@@ -1,5 +1,5 @@
 <template>
-    <div id="teamcard">
+    <div>
         <div v-if="status.errored">
             <p>Team comp in error</p>
         </div>
@@ -8,10 +8,12 @@
                 <h2>Still loading team</h2>
             </div>
             <div v-else>
-                <b-card 
-                :title="team.TeamName" 
+                <b-card
                 class="b-card"
+                style="max-width: 20rem"
                 >
+                    <h4 slot="header">{{team.TeamName}}</h4>
+                    <img src="../assets/save.png" alt="save" slot="header" v-if="status.enableSave" class="save-icon">
                     <b-card-text>
                         <team-lead :teamLead="teamLead" :allEmployees="employees" />
                         <team-members :key="teamMembers._id" :teamMembers="teamMembers" :allEmployees="employees"/>
@@ -36,7 +38,8 @@ export default {
         return {
             status: {
                 loading: false,
-                errored: false
+                errored: false,
+                enableSave: true
             },
             teamLead: null,
             teamMembers: null,
@@ -77,6 +80,20 @@ export default {
 .b-card{
     margin-bottom: 5%;
     width: 15rem;
+    padding: 0;
+}
+
+.card-header{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin: 0;
+}
+
+.save-icon{
+    height: 20%;
+    width: 12%;
+    cursor: pointer;
 }
 
 </style>
