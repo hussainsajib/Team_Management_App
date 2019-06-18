@@ -18,8 +18,8 @@
                 :preselect-first="true"
                 :allow-empty="false"
                 :custom-label="createLabel"
-                trackBy="_id"
                 @select="emitEvent"
+                trackBy="_id"
                 selectLabel="Sel"
                 deselectLabel="Rem"
                 ></multiselect>

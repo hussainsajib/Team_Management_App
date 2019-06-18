@@ -17,7 +17,7 @@
                     <b-card-text>
                         <team-lead :teamLead="teamLead" :allEmployees="employees" @click="leaderSelected" />
                         <team-members :key="teamMembers._id" :teamMembers="teamMembers" :allEmployees="employees" @click="memberChanged"/>
-                        <projects :teamProjects="teamProjects" :allProjects="projects" />
+                        <projects :teamProjects="teamProjects" :allProjects="projects" @click="projectsChanged"/>
                     </b-card-text>
                 </b-card>
             </div>
@@ -81,7 +81,9 @@ export default {
         },
         memberChanged: function(list){
             this.status.enableSave = true;
-            console.log(list);
+        },
+        projectsChanged: function(list){
+            this.status.enableSave = true;
         }
 
     }

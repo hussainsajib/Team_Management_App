@@ -11,11 +11,16 @@
                 <multiselect 
                 v-model="value" 
                 :options="options"
+                :id="value._id"
+                :key="value._id"
                 :multiple="true"
                 :close-on-select="false"
                 :clear-on-select="false"
                 :internalSearch="true"
                 :preserveSearch="true"
+                @close="changeProject"
+                label="ProjectName"
+                trackBy="_id"
                 selectLabel="Sel"
                 deselectLabel="Rem"
                 placeholder="Select Projects"
@@ -27,7 +32,6 @@
 </template>
 
 <script>
-import getProjectData from "../Projects"
 import Vue from 'vue'
 import Multiselect from 'vue-multiselect'
 
@@ -50,10 +54,14 @@ export default {
     
     created: function(){
         this.status.loading = true;
-        this.projectList = getProjectData();
-        this.options = this.allProjects.map(item=>item.ProjectName);
-        this.value = this.teamProjects.map(teamProject=>this.allProjects.find(project=>teamProject == project._id).ProjectName);
+        this.options = this.allProjects;
+        this.value = this.teamProjects.map(item=>this.allProjects.find(project=>project._id==item));
         this.status.loading = false;
+    },
+    methods: {
+        changeProject: function(item){
+            this.$emit('click',item);
+        }
     }
 
 }
