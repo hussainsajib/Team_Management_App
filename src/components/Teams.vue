@@ -5,7 +5,7 @@
         </div>
         <div>
             <div v-if="status.loading">
-                <h2>Still loading data in Teams</h2>
+                <img src="../assets/ajax-loader.gif" alt="loader" id="loader">
             </div>
             <div class="cards" v-else>
                 <team
