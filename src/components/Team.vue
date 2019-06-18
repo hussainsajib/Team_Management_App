@@ -16,7 +16,7 @@
                     <img src="../assets/save.png" alt="save" slot="header" v-if="status.enableSave" class="save-icon" @click="saveTeam">
                     <b-card-text>
                         <team-lead :teamLead="teamLead" :allEmployees="employees" @click="leaderSelected" />
-                        <team-members :key="teamMembers._id" :teamMembers="teamMembers" :allEmployees="employees"/>
+                        <team-members :key="teamMembers._id" :teamMembers="teamMembers" :allEmployees="employees" @click="memberChanged"/>
                         <projects :teamProjects="teamProjects" :allProjects="projects" />
                     </b-card-text>
                 </b-card>
@@ -74,12 +74,14 @@ export default {
         leaderSelected: function(item){
             this.status.enableSave = true;
             this.setTeamLead(item);
-            console.log(item);
-            console.log(this.teamLead);
         },
         saveTeam: function(){
             console.log("Item Saved");
             this.status.enableSave = false;
+        },
+        memberChanged: function(list){
+            this.status.enableSave = true;
+            console.log(list);
         }
 
     }

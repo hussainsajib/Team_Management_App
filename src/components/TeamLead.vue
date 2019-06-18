@@ -10,14 +10,16 @@
             <div v-else>
                 <multiselect
                 v-model="value"
-                :key="valueObject._id"
-                :id="valueObject._id"
+                :key="value._id"
+                :id="value._id"
                 :options="options"
                 :close-on-select="true"
                 :clear-on-select="false"
                 :preselect-first="true"
                 :allow-empty="false"
-                @close="emitEvent"
+                :custom-label="createLabel"
+                trackBy="_id"
+                @select="emitEvent"
                 selectLabel="Sel"
                 deselectLabel="Rem"
                 ></multiselect>
@@ -43,24 +45,20 @@ export default {
             },
             value: null,
             options: null,
-            valueObject: null
-
         }
     },
     created: function(){
         this.status.loading = true;
-        this.options = this.allEmployees.map(employee=>`${employee.FirstName} ${employee.LastName}`)
-        this.valueObject = this.allEmployees.find(employee=>employee._id == this.teamLead._id);
-        this.value = `${this.valueObject.FirstName} ${this.valueObject.LastName}`
+        this.options = this.allEmployees;
+        this.value = this.teamLead;
         this.status.loading = false;
     },
     methods:{
-        emitEvent: function(itemName){
-            this.changeValueObject(itemName);
-            this.$emit('click',this.valueObject._id);
+        emitEvent: function(itemName,itemID){
+            this.$emit('click', itemName._id);
         },
-        changeValueObject: function(name){
-            this.valueObject = this.allEmployees.find(employee=>employee.FirstName.concat(' ').concat(employee.LastName).toLowerCase() == name.toLowerCase());
+        createLabel: function({FirstName, LastName}){
+            return `${FirstName} ${LastName}`;
         }
     }
     

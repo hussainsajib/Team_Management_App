@@ -9,13 +9,18 @@
       </div>
       <div v-else>
         <multiselect 
-        v-model="value" 
+        v-model="value"
         :options="options"
+        :id="value._id"
+        :key="value._id"
         :multiple="true"
         :close-on-select="false"
         :clear-on-select="false"
         :internalSearch="true"
         :preserveSearch="true"
+        :custom-label="createLabel"
+        @close="changeMember"
+        trackBy="_id"
         selectLabel="Sel"
         deselectLabel="Rem"
         placeholder="Select Members"
@@ -54,6 +59,7 @@ export default {
     return {
       value: null,
       options: null,
+      memberObjects: null,
       status:{
         loading: false,
         errored: false,
@@ -62,9 +68,17 @@ export default {
   },
   created: function(){
     this.status.loading = true;
-    this.options = this.allEmployees.map(item=>`${item.FirstName} ${item.LastName}`);
-    this.value = this.teamMembers.map(item=>`${item.FirstName} ${item.LastName}`);
+    this.options = this.allEmployees;
+    this.value = this.teamMembers;
     this.status.loading = false;
+  },
+  methods: {
+    changeMember: function(member){
+      this.$emit('click',this.value);
+    },
+    createLabel: function({FirstName, LastName}){
+        return `${FirstName} ${LastName}`;
+    }
   }
 }
 </script>
