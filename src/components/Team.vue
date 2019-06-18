@@ -13,9 +13,9 @@
                 style="max-width: 20rem"
                 >
                     <h4 slot="header">{{team.TeamName}}</h4>
-                    <img src="../assets/save.png" alt="save" slot="header" v-if="status.enableSave" class="save-icon">
+                    <img src="../assets/save.png" alt="save" slot="header" v-if="status.enableSave" class="save-icon" @click="saveTeam">
                     <b-card-text>
-                        <team-lead :teamLead="teamLead" :allEmployees="employees" />
+                        <team-lead :teamLead="teamLead" :allEmployees="employees" @click="leaderSelected" />
                         <team-members :key="teamMembers._id" :teamMembers="teamMembers" :allEmployees="employees"/>
                         <projects :teamProjects="teamProjects" :allProjects="projects" />
                     </b-card-text>
@@ -39,7 +39,7 @@ export default {
             status: {
                 loading: false,
                 errored: false,
-                enableSave: true
+                enableSave: false
             },
             teamLead: null,
             teamMembers: null,
@@ -55,21 +55,31 @@ export default {
     },
     created: function(){
         this.status.loading = true;
-        this.setTeamLead();
+        this.setTeamLead(this.team.TeamLead);
         this.setTeamMembers();
         this.teamProjects = this.team.Projects;
         this.teamName = this.team.TeamName;
         this.status.loading = false;
     },
     methods:{
-        setTeamLead: function(){
-            this.teamLead = this.employees.find(employee=>employee._id == this.team.TeamLead);
+        setTeamLead: function(leaderID){
+            this.teamLead = this.employees.find(employee=>employee._id == leaderID);
         },
         setTeamMembers: function(){
             this.teamMembers = this.team.Employees.map(member=>this.employees.find(employee=>employee._id == member));
         },
         setProjects: function(){
-            this.teamProjects = this.team
+            this.teamProjects = this.team;
+        },
+        leaderSelected: function(item){
+            this.status.enableSave = true;
+            this.setTeamLead(item);
+            console.log(item);
+            console.log(this.teamLead);
+        },
+        saveTeam: function(){
+            console.log("Item Saved");
+            this.status.enableSave = false;
         }
 
     }
