@@ -15,7 +15,7 @@
                 :clear-on-select="false"
                 :preselect-first="true"
                 :allow-empty="false"
-                selectLabe="Sel"
+                selectLabel="Sel"
                 deselectLabel="Rem"
                 ></multiselect>
             </div>
@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import Multiselect from 'vue-multiselect'
 
 export default {

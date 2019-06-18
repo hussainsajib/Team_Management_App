@@ -20,20 +20,15 @@
                 </b-card>
             </div>
         </div>
-
-        
-        
     </div>
 </template>
 
 <script>
 
 
-import getEmployeeData from '../employees'
 import Projects from './Projects'
 import TeamLead from './TeamLead'
 import TeamMembers from './TeamMembers'
-import employees from '../employees';
 
 export default {
     name: 'Team',

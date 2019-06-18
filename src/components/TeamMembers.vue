@@ -11,7 +11,6 @@
         <multiselect 
         v-model="value" 
         :options="options"
-        :label="Members"
         :multiple="true"
         :close-on-select="false"
         :clear-on-select="false"
@@ -42,7 +41,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import Multiselect from 'vue-multiselect'
 
 
@@ -66,8 +64,6 @@ export default {
     this.status.loading = true;
     this.options = this.allEmployees.map(item=>`${item.FirstName} ${item.LastName}`);
     this.value = this.teamMembers.map(item=>`${item.FirstName} ${item.LastName}`);
-    console.log(this.value);
-    console.log(this.options);
     this.status.loading = false;
   }
 }

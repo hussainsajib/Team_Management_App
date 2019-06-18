@@ -53,7 +53,6 @@ export default {
             this.status.loading = false;
         } catch(error){
             this.status.errored = true;
-            console.log(error);
         }     
     },
 }
