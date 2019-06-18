@@ -27,7 +27,7 @@
 
 <script>
 import axios from 'axios'
-
+import BootstrapVue from 'bootstrap-vue'
 import Projects from './Projects'
 import TeamLead from './TeamLead'
 import TeamMembers from './TeamMembers'
@@ -95,9 +95,15 @@ export default {
                 Projects: this.teamObject.teamProjects,
                 Employees: this.teamObject.teamMembers,
                 TeamLead: this.teamObject.teamLead
-            }).then(response=>window.alert(response.data.message))
-            .catch(error=>console.log(error));
-
+            }).then(response=>this.makeToast(`${this.teamObject.teamName} has been updated successfully!`))
+            .catch(error=>this.makeToast(`${error.message}`));
+        },
+        makeToast: function(message){
+            this.$bvToast.toast(message),{
+                title: 'Message',
+                autoHideDelay: 5000,
+                appendToast: append
+            }
         }
 
     }

@@ -53,8 +53,20 @@ export default {
             this.status.loading = false;
         } catch(error){
             this.status.errored = true;
+            console.log(error);
+            console.log(this.status.errored);
+            this.makeToast(error);
         }     
     },
+    methods: {
+        makeToast: function(message){
+            this.$bvToast.toast(message),{
+                title: 'Message',
+                autoHideDelay: 5000,
+                appendToast: append
+            }
+        }
+    }
 }
 </script>
 
