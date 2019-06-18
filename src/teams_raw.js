@@ -21,34 +21,33 @@ export default function (){
 }
 */
 
-export default function(){
+export default async function(){
     var allData = {
         teams: null,
         employees: null,
         projects: null,
     }
-    let data = getEmployee();
-    
+    let data = await getEmployee();
     if(data == 1){
         throw new Error("Unable to fetch Employee data");
     } else {
         allData.employees = data;
     }
 
-    data = getProjects();
+    data = await getProjects();
     if(data == 1){
         throw new Error("Unable to fetch Project data");
     } else {
         allData.projects = data;
     }
 
-    data = getTeams();
+    data = await getTeams();
     if(data == 1){
         throw new Error("Unable to fetch Team data");
     } else {
         allData.teams = data;
     }
-    return allData;
+    return await allData;
 
 }
 async function getEmployee() {

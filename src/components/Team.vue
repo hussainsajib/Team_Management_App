@@ -95,15 +95,15 @@ export default {
                 Projects: this.teamObject.teamProjects,
                 Employees: this.teamObject.teamMembers,
                 TeamLead: this.teamObject.teamLead
-            }).then(response=>this.makeToast(`${this.teamObject.teamName} has been updated successfully!`))
-            .catch(error=>this.makeToast(`${error.message}`));
+            })  .then(response=>this.makeToast(`${this.teamObject.teamName} has been updated successfully!`))
+                .catch(error=>this.makeToast(`${error}`));
         },
         makeToast: function(message){
-            this.$bvToast.toast(message),{
+            this.$bvToast.toast(`${message}`,{
                 title: 'Message',
                 autoHideDelay: 5000,
-                appendToast: append
-            }
+                appendToast: true,
+            })
         }
 
     }
