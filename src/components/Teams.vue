@@ -47,9 +47,9 @@ export default {
         try{
             this.status.loading = true;
             allData = await getTeamData();
-            this.teams = await allData.teams;
-            this.employees = await allData.employees;
-            this.projects = await allData.projects;
+            this.teams = sortBy(await allData.teams,item=>item._id);
+            this.employees = sortBy(await allData.employees, emp=>emp.FirstName);
+            this.projects = sortBy( await allData.projects, proj=>proj._id);
             this.status.loading = false;
         } catch(error){
             this.status.errored = true;
