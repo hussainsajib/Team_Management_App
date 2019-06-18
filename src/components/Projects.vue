@@ -19,6 +19,7 @@
                 :internalSearch="true"
                 :preserveSearch="true"
                 @close="changeProject"
+                @remove="removeProject"
                 label="ProjectName"
                 trackBy="_id"
                 selectLabel="Sel"
@@ -60,7 +61,11 @@ export default {
     },
     methods: {
         changeProject: function(item){
-            this.$emit('click',item);
+            this.$emit('click',this.value);
+        },
+        removeProject: function(item){
+            this.value = this.value.filter(project=>project._id != item._id);
+            this.changeProject();
         }
     }
 

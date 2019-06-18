@@ -15,9 +15,9 @@
                     <h4 slot="header">{{team.TeamName}}</h4>
                     <img src="../assets/save.png" alt="save" slot="header" v-if="status.enableSave" class="save-icon" @click="saveTeam">
                     <b-card-text>
-                        <team-lead :teamLead="teamLead" :allEmployees="employees" @click="leaderSelected" />
-                        <team-members :key="teamMembers._id" :teamMembers="teamMembers" :allEmployees="employees" @click="memberChanged"/>
-                        <projects :teamProjects="teamProjects" :allProjects="projects" @click="projectsChanged"/>
+                        <team-lead :teamLead="teamObject.teamLead" :allEmployees="employees" @click="leaderSelected" />
+                        <team-members :key="teamObject.teamMembers._id" :teamMembers="teamObject.teamMembers" :allEmployees="employees" @click="memberChanged"/>
+                        <projects :teamProjects="teamObject.teamProjects" :allProjects="projects" @click="projectsChanged"/>
                     </b-card-text>
                 </b-card>
             </div>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-
+import axios from 'axios'
 
 import Projects from './Projects'
 import TeamLead from './TeamLead'
@@ -41,10 +41,12 @@ export default {
                 errored: false,
                 enableSave: false
             },
-            teamLead: null,
-            teamMembers: null,
-            teamProjects:null,
-            teamName: null,            
+            teamObject: {
+                teamName: null,
+                teamProjects:null,
+                teamMembers: null,
+                teamLead: null,
+            }          
         }
     },
     props: [ 'team', 'projects', 'employees'],
@@ -57,16 +59,16 @@ export default {
         this.status.loading = true;
         this.setTeamLead(this.team.TeamLead);
         this.setTeamMembers();
-        this.teamProjects = this.team.Projects;
-        this.teamName = this.team.TeamName;
+        this.teamObject.teamProjects = this.team.Projects;
+        this.teamObject.teamName = this.team.TeamName;
         this.status.loading = false;
     },
     methods:{
         setTeamLead: function(leaderID){
-            this.teamLead = this.employees.find(employee=>employee._id == leaderID);
+            this.teamObject.teamLead = this.employees.find(employee=>employee._id == leaderID);
         },
         setTeamMembers: function(){
-            this.teamMembers = this.team.Employees.map(member=>this.employees.find(employee=>employee._id == member));
+            this.teamObject.teamMembers = this.team.Employees.map(member=>this.employees.find(employee=>employee._id == member));
         },
         setProjects: function(){
             this.teamProjects = this.team;
@@ -76,14 +78,26 @@ export default {
             this.setTeamLead(item);
         },
         saveTeam: function(){
-            console.log("Item Saved");
+            this.uploadData();
             this.status.enableSave = false;
         },
         memberChanged: function(list){
             this.status.enableSave = true;
+            this.teamObject.teamMembers = list;
         },
         projectsChanged: function(list){
             this.status.enableSave = true;
+            this.teamObject.teamProjects = list;
+        },
+        uploadData: async function(){
+            axios.put(`https://glacial-beyond-73904.herokuapp.com/team/${this.team._id}`,{
+                TeamName: this.teamObject.teamName,
+                Projects: this.teamObject.teamProjects,
+                Employees: this.teamObject.teamMembers,
+                TeamLead: this.teamObject.teamLead
+            }).then(response=>window.alert(response.data.message))
+            .catch(error=>console.log(error));
+
         }
 
     }
