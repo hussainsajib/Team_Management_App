@@ -1,9 +1,9 @@
 <template>
-    <div id="teamscomp">
+    <div >
         <div v-if="status.errored">
             <p>Error loading data</p>
         </div>
-        <div>
+        <div id="teamscomp">
             <div v-if="status.loading">
                 <img src="../assets/ajax-loader.gif" alt="loader" id="loader">
             </div>
@@ -17,13 +17,12 @@
             />
             </div>
         </div>
-        
     </div>
 </template>
 
 <script>
 import { sortBy } from 'lodash'
-import getTeamData from "../teams_raw"
+import getData from "../fetchData"
 import Team from "./Team"
 
 export default {
@@ -46,7 +45,7 @@ export default {
         var allData;
         try{
             this.status.loading = true;
-            allData = await getTeamData();
+            allData = await getData();
             this.teams = sortBy(await allData.teams,item=>item._id);
             this.employees = sortBy(await allData.employees, emp=>emp.FirstName);
             this.projects = sortBy( await allData.projects, proj=>proj._id);
@@ -68,12 +67,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
 .cards{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
+    margin-top: 2%;
 }
 
 </style>

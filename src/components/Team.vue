@@ -27,7 +27,6 @@
 
 <script>
 import axios from 'axios'
-import BootstrapVue from 'bootstrap-vue'
 import Projects from './Projects'
 import TeamLead from './TeamLead'
 import TeamMembers from './TeamMembers'
@@ -112,7 +111,7 @@ export default {
 
 <style scoped>
 .b-card{
-    margin-bottom: 5%;
+    margin-top: 5%;
     width: 15rem;
     padding: 0;
 }

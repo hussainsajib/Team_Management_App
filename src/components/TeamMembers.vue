@@ -38,10 +38,7 @@
           </template>
         </multiselect>
       </div>
-
     </div>
-
-    
   </div>
 </template>
 
@@ -83,11 +80,7 @@ export default {
 }
 </script>
 
-
-
 <style src="vue-multiselect/dist/vue-multiselect.min.css"> </style>
 <style scoped>
-div *{
-  font-size: .9em;
-}
+
 </style>

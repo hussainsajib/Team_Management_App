@@ -33,7 +33,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import Multiselect from 'vue-multiselect'
 
 export default {
@@ -72,6 +71,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
