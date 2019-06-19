@@ -1,7 +1,7 @@
 <template>
     <div >
         <div v-if="status.errored">
-            <p>Error loading data</p>
+            <p>We couldn't fetch data. Please check the links.</p>
         </div>
         <div id="teamscomp">
             <div v-if="status.loading">
